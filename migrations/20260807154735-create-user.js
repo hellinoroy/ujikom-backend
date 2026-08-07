@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('User', {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -32,7 +32,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    // MySQL automatically drops the ENUM definition when dropping the table
-    await queryInterface.dropTable('User');
+    await queryInterface.dropTable('users');
   },
 };

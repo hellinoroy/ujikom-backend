@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Peminjam',
-    freezeTableName: true,
+    tableName: 'peminjam',
     timestamps: false,
     hooks: {
         beforeCreate: async (peminjam) => {

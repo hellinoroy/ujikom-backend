@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Buku', [
+    await queryInterface.bulkInsert('buku', [
       {
         id: 'BK-001',
         judul: 'Laskar Pelangi',
@@ -44,6 +44,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Buku', null, {});
+    await queryInterface.bulkDelete('buku', null, {});
   },
 };

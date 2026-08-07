@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Kategori',
-    freezeTableName: true,
+    tableName: 'kategori',
     timestamps: false,
   });
   return Kategori;
