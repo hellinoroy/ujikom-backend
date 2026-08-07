@@ -6,11 +6,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Peminjam extends Model {
     static associate(models) {
-        Peminjam.belongsTo(models.user, {
+        Peminjam.belongsTo(models.User, {
             foreignKey: 'user_id'
         });
 
-        Peminjam.belongsTo(models.buku, {
+        Peminjam.belongsTo(models.Buku, {
             foreignKey: 'buku_id'
         });
     }
