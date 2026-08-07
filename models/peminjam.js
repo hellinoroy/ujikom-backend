@@ -55,6 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Peminjam',
     freezeTableName: true,
+    timestamps: false,
     hooks: {
         beforeCreate: async (peminjam) => {
             const dueDate = new Date(peminjam.tanggal_pinjam);
