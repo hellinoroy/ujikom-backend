@@ -9,7 +9,7 @@ const {
   deleteBuku
 } = require('../controllers/bukuController');
 
-const { verifyToken, verifyRole } = require('../middlewares/authMiddleware');
+const { verifyToken, verifyRole } = require('../middleware/auth');
 
 router.get('/', getAllBuku);
 router.get('/:id', getBukuById);
