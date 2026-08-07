@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     tanggal_pinjam: {
       type:DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW
     },
     tanggal_jatuh_tempo: {
       type:DataTypes.DATE,
@@ -58,6 +59,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: false,
     hooks: {
         beforeCreate: async (peminjam) => {
+            peminjam.tanggal_pinjam = peminjam.tanggal_pinjam || new Date();
+            
             const dueDate = new Date(peminjam.tanggal_pinjam);
             dueDate.setDate(dueDate.getDate() + 7);
             peminjam.tanggal_jatuh_tempo = dueDate;
