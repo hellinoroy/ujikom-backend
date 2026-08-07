@@ -3,6 +3,8 @@ const { sequelize } = require('./models/index');
 
 const authRoutes = require('./routes/authRoutes');
 const kategoriRoutes = require('./routes/kategoriRoutes');
+const bukuRoutes = require('./routes/bukuRoutes');
+
 
 require('dotenv').config();
 
@@ -13,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/kategori', kategoriRoutes);
+app.use('/api/buku', bukuRoutes);
 
 async function startServer() {
     try {
