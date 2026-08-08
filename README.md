@@ -23,77 +23,81 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda telah terinstal:
 > **Catatan Penting:** Endpoint dengan label **[Protected]** memerlukan token JWT. Tambahkan pada header request Anda:  
 > `Authorization: Bearer <token_jwt>`
 
-### 1. 🔐 Kategori: Autentikasi
+### 1. 🔐 Kategori: Autentikasi (`/api/auth`)
 
 *   **POST `/api/auth/register` [Public]**
     *   **Deskripsi:** Mendaftarkan pengguna baru.
-    *   **Body (JSON):** `name` (string), `email` (string), `password` (string), `role` (string)
+    *   **Body (JSON):** `nama` (string), `email` (string), `password` (string), `role` (string - opsional, default: "anggota")
 
 *   **POST `/api/auth/login` [Public]**
     *   **Deskripsi:** Masuk ke sistem dan mendapatkan Token JWT.
     *   **Body (JSON):** `email` (string), `password` (string)
 
-*   **GET `/api/auth/me` [Protected]**
-    *   **Deskripsi:** Mengambil data profil yang sedang login.
-    *   **Headers:** `Authorization: Bearer <token>`
+---
+
+### 2. 📦 Kategori: Buku (`/api/buku`)
+
+*   **GET `/api/buku` [Public]**
+    *   **Deskripsi:** Mendapatkan daftar semua buku.
+    *   **Query (Opsional):** `id`, `judul`, `penulis`, `penerbit`, `tahun_terbit`, `kategori_id`
+
+*   **GET `/api/buku/:id` [Public]**
+    *   **Deskripsi:** Mendapatkan detail buku berdasarkan ID.
+    *   **Params:** `id` (integer/string)
+
+*   **POST `/api/buku` [Protected - Khusus Admin]**
+    *   **Deskripsi:** Menambahkan buku baru.
+    *   **Body (JSON):** `id` (string/integer), `judul` (string), `penulis` (string), `penerbit` (string), `stok` (integer), `tahun_terbit` (integer/string), `kategori_id` (integer)
+
+*   **PUT `/api/buku/:id` [Protected - Khusus Admin]**
+    *   **Deskripsi:** Memperbarui data buku.
+    *   **Params:** `id` (integer/string)
+    *   **Body (JSON):** `judul` (string), `penulis` (string), `penerbit` (string), `stok` (integer), `tahun_terbit` (integer/string), `kategori_id` (integer)
+
+*   **DELETE `/api/buku/:id` [Protected - Khusus Admin]**
+    *   **Deskripsi:** Menghapus buku.
+    *   **Params:** `id` (integer/string)
 
 ---
 
-### 2. 👥 Kategori: Manajemen Pengguna (Users)
+### 3. 📑 Kategori: Kategori Buku (`/api/kategori`)
 
-*   **GET `/api/users` [Protected]**
-    *   **Deskripsi:** Mendapatkan seluruh data user (Khusus Admin).
-    *   **Query (Opsional):** `?page=1&limit=10`
+*   **GET `/api/kategori` [Protected - Khusus Admin]**
+    *   **Deskripsi:** Mendapatkan daftar semua kategori.
 
-*   **GET `/api/users/:id` [Protected]**
-    *   **Deskripsi:** Mendapatkan detail user berdasarkan ID.
-    *   **Params:** `id` (integer)
+*   **POST `/api/kategori` [Protected - Khusus Admin]**
+    *   **Deskripsi:** Menambahkan kategori baru.
+    *   **Body (JSON):** `nama_kategori` (string)
 
-*   **PUT `/api/users/:id` [Protected]**
-    *   **Deskripsi:** Memperbarui data user.
-    *   **Params:** `id` (integer)
-    *   **Body (JSON):** `name` (string), `email` (string), `role` (string)
+*   **PUT `/api/kategori/:id` [Protected - Khusus Admin]**
+    *   **Deskripsi:** Memperbarui data kategori.
+    *   **Params:** `id` (integer/string)
+    *   **Body (JSON):** `nama_kategori` (string)
 
-*   **DELETE `/api/users/:id` [Protected]**
-    *   **Deskripsi:** Menghapus user dari sistem (Khusus Admin).
-    *   **Params:** `id` (integer)
-
----
-
-### 3. 📦 Kategori: Data Master (Produk/Item)
-
-*   **GET `/api/items` [Protected]**
-    *   **Deskripsi:** Menampilkan seluruh data master.
-    *   **Query (Opsional):** `?search=nama`
-
-*   **POST `/api/items` [Protected]**
-    *   **Deskripsi:** Menambahkan data master baru.
-    *   **Body (JSON):** `nama_item` (string), `harga` (integer), `deskripsi` (string), `stok` (integer)
-
-*   **PUT `/api/items/:id` [Protected]**
-    *   **Deskripsi:** Mengubah detail data master.
-    *   **Params:** `id` (integer)
-    *   **Body (JSON):** `nama_item` (string), `harga` (integer), `deskripsi` (string), `stok` (integer)
-
-*   **DELETE `/api/items/:id` [Protected]**
-    *   **Deskripsi:** Menghapus data master.
-    *   **Params:** `id` (integer)
+*   **DELETE `/api/kategori/:id` [Protected - Khusus Admin]**
+    *   **Deskripsi:** Menghapus kategori.
+    *   **Params:** `id` (integer/string)
 
 ---
 
-### 4. 🛒 Kategori: Transaksi
+### 4. 🛒 Kategori: Peminjaman (`/api/peminjam`)
 
-*   **GET `/api/transactions` [Protected]**
-    *   **Deskripsi:** Melihat riwayat transaksi.
+*   **GET `/api/peminjam/my-borrows` [Protected]**
+    *   **Deskripsi:** Mendapatkan riwayat peminjaman milik pengguna yang sedang login.
 
-*   **POST `/api/transactions` [Protected]**
-    *   **Deskripsi:** Membuat transaksi baru.
-    *   **Body (JSON):** 
-        *   `user_id` (integer)
-        *   `items` (Array of Object): `[{ "item_id": 1, "qty": 2 }]`
-        *   `total_harga` (integer)
+*   **GET `/api/peminjam` [Protected - Khusus Admin & Petugas]**
+    *   **Deskripsi:** Mendapatkan semua data peminjaman.
+    *   **Query (Opsional):** `user_id`, `buku_id`
 
-*   **PUT `/api/transactions/:id/status` [Protected]**
-    *   **Deskripsi:** Mengubah status transaksi.
-    *   **Params:** `id` (integer)
-    *   **Body (JSON):** `status` (string, contoh: "selesai" atau "lunas")
+*   **GET `/api/peminjam/:id` [Protected]**
+    *   **Deskripsi:** Mendapatkan detail peminjaman. Hanya bisa diakses oleh pemilik peminjaman, admin, atau petugas.
+    *   **Params:** `id` (integer/string)
+
+*   **POST `/api/peminjam` [Protected - Khusus Admin & Petugas]**
+    *   **Deskripsi:** Membuat catatan peminjaman baru (stok buku akan berkurang otomatis).
+    *   **Body (JSON):** `user_id` (integer/string), `buku_id` (string/integer)
+
+*   **PUT `/api/peminjam/return/:id` [Protected - Khusus Admin & Petugas]**
+    *   **Deskripsi:** Mengembalikan buku (stok buku bertambah, dan menghitung denda keterlambatan jika ada).
+    *   **Params:** `id` (integer/string)
+    *   **Body (JSON):** `user_id` (integer/string)
