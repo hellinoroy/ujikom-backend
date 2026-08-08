@@ -1,9 +1,46 @@
 const { Buku } = require('../models');
+const { Op } = require('sequelize');
 
 // 1. Get all books
 const getAllBuku = async (req, res) => {
   try {
-    const buku = await Buku.findAll();
+    const { id, judul, penulis, penerbit, tahun_terbit, kategori_id} = req.query;
+    const search = {};
+
+    if(id){
+        search.id = parseInt(id);
+    }
+
+    if(judul) {
+        search.judul = {[Op.like]: `%${judul}%`};
+    }
+
+    if(penulis) {
+        search.penulis = {[Op.like]: `%${penulis}%`};
+    }
+    
+    if(penerbit) {
+        search.penerbit = {[Op.like]: `%${penerbit}%`};
+    }
+
+    if(tahun_terbit) {
+        search.tahun_terbit = tahun_terbit;
+    }
+
+    if(kategori_id) {
+        search.kategori_id = parseInt(kategori_id);
+    }
+
+    const buku = await Buku.findAll({
+        where: search
+    });
+    
+    if (buku.length == 0 && Object.keys(search).length != 0) {
+      return res.status(404).json({
+        message: 'Buku tidak ditemukan'
+      });
+    }
+    
 
     return res.status(200).json(buku);
   } catch (error) {
@@ -55,7 +92,6 @@ const createBuku = async (req, res) => {
 
     return res.status(201).json({
       message: 'Buku berhasil ditambahkan',
-      data: newBuku
     });
   } catch (error) {
     return res.status(500).json({
@@ -88,7 +124,6 @@ const updateBuku = async (req, res) => {
 
     return res.status(200).json({
       message: 'Buku berhasil diperbarui',
-      data: buku
     });
   } catch (error) {
     return res.status(500).json({

@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/kategori', kategoriRoutes);
 app.use('/api/buku', bukuRoutes);
-app.use('/api/buku', peminjamRoutes);
+app.use('/api/peminjam', peminjamRoutes);
 
 async function startServer() {
     try {

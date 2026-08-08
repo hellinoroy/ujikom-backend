@@ -1,10 +1,27 @@
 // controllers/peminjamController.js
 const { Peminjam, Buku, sequelize } = require('../models');
 
-// 1. Get all borrowings (Admin / Staff view)
 const getAllPeminjam = async (req, res) => {
   try {
-    const peminjam = await Peminjam.findAll();
+    const { user_id, buku_id } = req.query;
+    const search = {};
+
+    if(user_id) {
+        search.user_id = parseInt(user_id);
+    }
+    if(buku_id) {
+        search.buku_id = buku_id;
+    }
+
+    const peminjam = await Peminjam.findAll({
+        where: search 
+    });
+
+    if (peminjam.length == 0 && Object.keys(search).length != 0) {
+      return res.status(404).json({
+        message: 'Peminjaman tidak ditemukan'
+      });
+    }
 
     return res.status(200).json(peminjam);
   } catch (error) {
@@ -115,7 +132,6 @@ const createPeminjam = async (req, res) => {
   }
 };
 
-// 5. Return book (user_id verified from req.body & fine calculation)
 const returnBuku = async (req, res) => {
   const transaction = await sequelize.transaction();
 
@@ -135,7 +151,6 @@ const returnBuku = async (req, res) => {
       return res.status(404).json({ message: 'Data peminjaman tidak ditemukan' });
     }
 
-    // Verify that the borrowing record matches the provided user_id
     if (peminjam.user_id !== Number(user_id)) {
       await transaction.rollback();
       return res.status(400).json({ message: 'Data peminjaman tidak sesuai dengan user_id yang diberikan' });
@@ -161,6 +176,9 @@ const returnBuku = async (req, res) => {
       const diffInTime = returnDate.getTime() - dueDate.getTime();
       const diffInDays = Math.ceil(diffInTime / (1000 * 60 * 60 * 24));
       denda = diffInDays * 2000;
+      console.log('diffInTime:' + diffInTime);
+      console.log('diffInDays:' + diffInDays);
+      console.log('denda:' + denda)
     }
 
     // Update borrowing status, return date, and final denda
@@ -171,6 +189,7 @@ const returnBuku = async (req, res) => {
     }, { transaction });
 
     await transaction.commit();
+    // await transaction.rollback();
 
     return res.status(200).json({
       message: 'Buku berhasil dikembalikan',
