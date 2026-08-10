@@ -10,7 +10,7 @@ module.exports = {
         tanggal_pinjam: new Date('2026-02-01'),
         tanggal_jatuh_tempo: new Date('2026-02-08'),
         tanggal_kembali: new Date('2026-02-07'),
-        status: 'Dikembalikan',
+        status: 'dikembalikan',
         denda: 0,
       },
       {
@@ -19,7 +19,7 @@ module.exports = {
         tanggal_pinjam: new Date('2026-02-01'),
         tanggal_jatuh_tempo: new Date('2026-02-08'),
         tanggal_kembali: new Date('2026-02-10'), // 2 days late
-        status: 'Terlambat',
+        status: 'dikembalikan',
         denda: 4000, // 2 days * Rp 2.000
       },
       {
@@ -28,7 +28,7 @@ module.exports = {
         tanggal_pinjam: new Date(),
         tanggal_jatuh_tempo: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // +7 days
         tanggal_kembali: null,
-        status: 'Dipinjam',
+        status: 'dipinjam',
         denda: 0,
       },
     ]);
