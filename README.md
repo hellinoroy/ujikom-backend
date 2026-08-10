@@ -9,11 +9,15 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda telah terinstal:
 - [npm](https://www.npmjs.com/) atau [yarn](https://yarnpkg.com/)
 - [MySQL](https://www.mysql.com/) / [PostgreSQL](https://www.postgresql.org/) Server
 
+## Dependensi
+
+- npm i
+
 ## Pengaturan Environment
 
 - Salin file contoh environment dan sesuaikan.
 
-## Dabatabse Migration & Seeder
+## Database Migration & Seeder
 
 - npx sequelize-cli db:migration
 - npx sequelize-cli db:seeder 
@@ -23,7 +27,7 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda telah terinstal:
 > **Catatan Penting:** Endpoint dengan label **[Protected]** memerlukan token JWT. Tambahkan pada header request Anda:  
 > `Authorization: Bearer <token_jwt>`
 
-### 1. 🔐 Kategori: Autentikasi (`/api/auth`)
+### 1. Kategori: Autentikasi (`/api/auth`)
 
 *   **POST `/api/auth/register` [Public]**
     *   **Deskripsi:** Mendaftarkan pengguna baru.
@@ -35,7 +39,7 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda telah terinstal:
 
 ---
 
-### 2. 📦 Kategori: Buku (`/api/buku`)
+### 2. Kategori: Buku (`/api/buku`)
 
 *   **GET `/api/buku` [Public]**
     *   **Deskripsi:** Mendapatkan daftar semua buku.
@@ -60,7 +64,7 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda telah terinstal:
 
 ---
 
-### 3. 📑 Kategori: Kategori Buku (`/api/kategori`)
+### 3. Kategori: Kategori Buku (`/api/kategori`)
 
 *   **GET `/api/kategori` [Protected - Khusus Admin]**
     *   **Deskripsi:** Mendapatkan daftar semua kategori.
@@ -80,7 +84,7 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda telah terinstal:
 
 ---
 
-### 4. 🛒 Kategori: Peminjaman (`/api/peminjam`)
+### 4. Kategori: Peminjaman (`/api/peminjam`)
 
 *   **GET `/api/peminjam/my-borrows` [Protected]**
     *   **Deskripsi:** Mendapatkan riwayat peminjaman milik pengguna yang sedang login.
