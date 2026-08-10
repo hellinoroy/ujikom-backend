@@ -9,6 +9,10 @@ Sebelum menjalankan proyek ini, pastikan sistem Anda telah terinstal:
 - [npm](https://www.npmjs.com/) atau [yarn](https://yarnpkg.com/)
 - [MySQL](https://www.mysql.com/) / [PostgreSQL](https://www.postgresql.org/) Server
 
+## Dependensi
+
+- npm i
+
 ## Pengaturan Environment
 
 - Salin file contoh environment dan sesuaikan.
