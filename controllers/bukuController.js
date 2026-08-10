@@ -8,7 +8,7 @@ const getAllBuku = async (req, res) => {
     const search = {};
 
     if(id){
-        search.id = parseInt(id);
+        search.id = {[Op.like]: `%${id}%`};
     }
 
     if(judul) {

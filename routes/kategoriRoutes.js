@@ -8,7 +8,7 @@ const {
 } = require('../controllers/kategoriController');
 const { verifyToken, verifyRole } = require('../middleware/auth.js');
 
-router.get('/', verifyToken, verifyRole('admin') ,getAllKategori);
+router.get('/', verifyToken, getAllKategori);
 router.post('/', verifyToken, verifyRole('admin'), createKategori);
 router.put('/:id', verifyToken, verifyRole('admin'), updateKategori);
 router.delete('/:id', verifyToken, verifyRole('admin'), deleteKategori);
